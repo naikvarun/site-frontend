@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import AppNavbar from "./common/AppNavbar";
+import AppRoutes from "./AppRoutes";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
         <AppNavbar />
       </div>
       <div id="content">
-        <h1>Weather App</h1>
+        <AppRoutes />
       </div>
     </div>
   );
