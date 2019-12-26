@@ -1,9 +1,10 @@
 import React from "react";
 import WeatherService from "../service/weather-api";
 import DisplayWeather from "./DisplayWeather";
-import {Accordion, Button, Card} from "react-bootstrap";
+import {Accordion, Card} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons'
+import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons'
+
 export default class ListLookup extends React.Component {
 
     constructor(props) {
@@ -22,7 +23,10 @@ export default class ListLookup extends React.Component {
         return (
             <div className="mt-3">
                 <Accordion>
-                    {this.state.previousLookups.map((info, index) => {
+                    {this.state.previousLookups
+                        .sort(((a, b) => {
+                            return (new Date(b.requestedTime).getDate()) - (new Date(a.requestedTime).getDate())
+                        })).map((info, index) => {
                         return (
                             <Card>
                                 <Card.Header>
