@@ -1,19 +1,29 @@
 const axios = require('axios');
 const {config} = require('../config');
 
-function buildURL(latitude, longitude) {
-    return `${config.WEATHER_API_URL}/${latitude},${longitude}`;
+function buildLookupURL(latitude, longitude) {
+    return `${config.WEATHER_API_URL}/lookup/${latitude},${longitude}`;
+}
+
+function buildListURL() {
+    return `${config.WEATHER_API_URL}/list`;
 }
 
 export default class WeatherService {
-    tst = async function test() {
-
-    };
     getWeather = async  function(latitude, longitude) {
         try {
-            let api = buildURL(latitude, longitude);
+            let api = buildLookupURL(latitude, longitude);
             const result = await axios.get(api, {crossdomain: true});
-            console.log(result);
+            return result.data;
+        } catch (e) {
+            throw e;
+        }
+    };
+
+    getPreviousLookup = async function() {
+        try {
+            let api = buildListURL();
+            const result = await axios.get(api, {crossdomain: true});
             return result.data;
         } catch (e) {
             throw e;
