@@ -1,7 +1,9 @@
 import React from "react";
 import WeatherService from "../service/weather-api";
 import DisplayWeather from "./DisplayWeather";
-import {Accordion, Button, Card} from "react-bootstrap";
+import {Accordion, Card} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons'
 
 export default class ListLookup extends React.Component {
 
@@ -17,26 +19,27 @@ export default class ListLookup extends React.Component {
         this.setState({previousLookups: lookups})
     }
 
-
     render() {
         return (
-            <div>
+            <div className="mt-3">
                 <Accordion>
-                    {this.state.previousLookups.map((info, index) => {
+                    {this.state.previousLookups
+                        .sort(((a, b) => {
+                            return (new Date(b.requestedTime).getDate()) - (new Date(a.requestedTime).getDate())
+                        })).map((info, index) => {
                         return (
                             <Card>
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey={index}>
-                                        <div>
-                                            <span>Latitude: {info.latitude}</span>
-                                            <span className="ml-2">Longitude: {info.longitude}</span>
-                                        </div>
+                                    <Accordion.Toggle eventKey={index}>
+                                        <FontAwesomeIcon icon={faCaretSquareDown} />
                                     </Accordion.Toggle>
-
+                                    <span className="ml-2">Latitude: {info.latitude}</span>
+                                    <span className="ml-2 mr-2">Longitude: {info.longitude}</span>
+                                    <div className="float-right">Retrieved at {new Date(info.requestedTime).toLocaleString()}</div>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey={index}>
                                     <Card.Body>
-                                        <DisplayWeather data={info}/>
+                                        <DisplayWeather data={info} onlyTable={true}/>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>

@@ -2,15 +2,50 @@ import React from "react";
 import {Col, Container, Row, Table} from "react-bootstrap";
 
 export default class DisplayWeather extends React.Component {
+
+    shouldShowOnlyTable() {
+        return ! (! this.props.onlyTable) || (this.props.onlyTable === false);
+    }
+
+    renderLatLong() {
+        let latLong;
+        if (!this.shouldShowOnlyTable()) {
+            latLong = (
+                <div>
+                    <p>Latitude: {this.props.data.latitude}</p>
+                    <p>Longitude: {this.props.data.longitude}</p>
+                </div>
+            );
+        }
+        return (
+            <div>
+                {latLong}
+            </div>
+        );
+    }
+
+    renderRequestTime() {
+        let requestTime;
+
+        if (!this.shouldShowOnlyTable()) {
+            requestTime = (
+                <span>Requested at {new Date(this.props.data.requestedTime).toLocaleString()}</span>
+            );
+        }
+        return (
+            <div>
+                {requestTime}
+            </div>
+        );
+    }
+
     render() {
         let table;
         if (this.props.data) {
             table = (
                 <Row>
                     <Col>
-                        <p>Latitude: {this.props.data.latitude}</p>
-                        <p>Longitude: {this.props.data.longitude}</p>
-
+                        {this.renderLatLong()}
                         <Table striped bordered hover>
                             <thead>
                             <tr>
@@ -35,7 +70,8 @@ export default class DisplayWeather extends React.Component {
                             })}
                             </tbody>
                         </Table>
-                        Requested at {new Date(this.props.data.requestedTime).toLocaleString()}
+                        {this.renderRequestTime()}
+
                     </Col>
                 </Row>);
         }
