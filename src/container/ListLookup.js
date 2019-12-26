@@ -18,7 +18,6 @@ export default class ListLookup extends React.Component {
         this.setState({previousLookups: lookups})
     }
 
-
     render() {
         return (
             <div className="mt-3">
