@@ -6,10 +6,10 @@ import AppRoutes from "./AppRoutes";
 function App() {
   return (
     <div className={'container'}>
-      <div id="navbar">
+      <div id="navbar mb-3">
         <AppNavbar />
       </div>
-      <div id="content">
+      <div id="content mt-3">
         <AppRoutes />
       </div>
     </div>
