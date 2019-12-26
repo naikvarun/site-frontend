@@ -36,7 +36,7 @@ export default class ListLookup extends React.Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey={index}>
                                     <Card.Body>
-                                        <DisplayWeather data={info}/>
+                                        <DisplayWeather data={info} onlyTable={true}/>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
