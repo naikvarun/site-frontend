@@ -2,7 +2,7 @@ import React from "react";
 import {Alert, Col, Container, Form, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import DisplayWeather from "./DisplayWeather";
-import weatherService from '../service/weather-api';
+import WeatherService from '../service/weather-api';
 
 export default class WeatherLookup extends React.Component {
     constructor(props) {
@@ -38,8 +38,7 @@ export default class WeatherLookup extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         try {
-            const result = await weatherService.getWeather(this.state.latitude, this.state.longitude);
-            console.log(result);
+            const result = await new WeatherService().getWeather(this.state.latitude, this.state.longitude);
             if (result) {
                 this.setState({
                     result: result,
