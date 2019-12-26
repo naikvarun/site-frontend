@@ -8,9 +8,8 @@ export default class WeatherLookup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // Pune, Maharashtra, India
-            latitude: 18.520430,
-            longitude: 73.856743,
+            latitude: 0,
+            longitude: 0,
             formValid: true,
             result: undefined,
             hasError: false,
@@ -20,6 +19,14 @@ export default class WeatherLookup extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.isFormValid = this.isFormValid.bind(this);
         this.reset = this.reset.bind(this);
+    }
+
+    async componentDidMount() {
+        await navigator.geolocation.getCurrentPosition(position => this.setState({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            }),
+            err => console.log(err));
     }
 
 
@@ -80,7 +87,7 @@ export default class WeatherLookup extends React.Component {
                             <Form.Row>
                                 <Form.Group as={Col} controlId="latitude">
                                     <Form.Label>Latitude</Form.Label>
-                                    <Form.Control type="number" name="latitude" min={-90} max={90} step={0.000001}
+                                    <Form.Control type="number" name="latitude" min={-90} max={90} step={0.00000000000001}
                                                   value={this.state.latitude} onChange={e => this.handleChange(e)}/>
                                     <Form.Control.Feedback type="invalid">
                                         Latitude should be between -90 and +90
@@ -89,7 +96,7 @@ export default class WeatherLookup extends React.Component {
 
                                 <Form.Group as={Col} controlId="longitude">
                                     <Form.Label>Longitude</Form.Label>
-                                    <Form.Control type="number" name="longitude" min={-180} max={180} step={0.000001}
+                                    <Form.Control type="number" name="longitude" min={-180} max={180} step={0.00000000000001}
                                                   value={this.state.longitude} onChange={e => this.handleChange(e)}/>
                                     <Form.Control.Feedback type="invalid">
                                         longitude should be between -180 and +180
