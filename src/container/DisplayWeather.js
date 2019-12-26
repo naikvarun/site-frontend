@@ -2,15 +2,6 @@ import React from "react";
 import {Col, Container, Row, Table} from "react-bootstrap";
 
 export default class DisplayWeather extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    renderWeatherInfo() {
-        return
-    }
-
     render() {
         let table;
         if(this.props.data) {

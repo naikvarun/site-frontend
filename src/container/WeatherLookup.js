@@ -2,6 +2,7 @@ import React from "react";
 import {Col, Container, Form, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import DisplayWeather from "./DisplayWeather";
+import weatherService from '../service/weather-api';
 
 export default class WeatherLookup extends React.Component {
     constructor(props) {
@@ -31,62 +32,15 @@ export default class WeatherLookup extends React.Component {
             && (-180 <= this.state.longitude && this.state.longitude <= 180);
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
-        this.setState({
-            result: {
-                "latitude": 41.911515,
-                "longitude": -87.65982,
-                "requestedTime": "2019-12-25T21:56:20.106Z",
-                "data": [{
-                    "time": 1577167200,
-                    "precipType": "rain",
-                    "temperatureHigh": 50.61,
-                    "temperatureLow": 37.79,
-                    "humidity": 0.86
-                }, {
-                    "time": 1577080800,
-                    "precipType": "rain",
-                    "temperatureHigh": 49.28,
-                    "temperatureLow": 32.03,
-                    "humidity": 0.8
-                }, {
-                    "time": 1576994400,
-                    "precipType": "rain",
-                    "temperatureHigh": 49.34,
-                    "temperatureLow": 34.57,
-                    "humidity": 0.79
-                }, {
-                    "time": 1576908000,
-                    "precipType": "snow",
-                    "precipAccumulation": 0.05,
-                    "temperatureHigh": 45.77,
-                    "temperatureLow": 31.08,
-                    "humidity": 0.8
-                }, {
-                    "time": 1576821600,
-                    "precipType": "snow",
-                    "precipAccumulation": 0.07,
-                    "temperatureHigh": 38.68,
-                    "temperatureLow": 29.94,
-                    "humidity": 0.85
-                }, {
-                    "time": 1576735200,
-                    "precipType": "snow",
-                    "precipAccumulation": 0.12,
-                    "temperatureHigh": 35.09,
-                    "temperatureLow": 26.06,
-                    "humidity": 0.74
-                }, {
-                    "time": 1576648800,
-                    "precipType": "snow",
-                    "precipAccumulation": 0.32,
-                    "temperatureHigh": 19.6,
-                    "temperatureLow": 17.15,
-                    "humidity": 0.57
-                }]
-            }
-        });
+        const result = await weatherService.getWeather(this.state.latitude, this.state.longitude);
+        if (result) {
+            this.setState({
+                result: result
+            });
+        }
+
     }
 
     render() {
